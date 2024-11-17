@@ -6,14 +6,14 @@ export default function App() {
             style={styles.container}
         >
             <Text
-                style={styles.textBold}
+                style={styles.eventName}
             >
                 Nome do evento
             </Text>
             <Text
-                style={styles.textNormal}
+                style={styles.eventDate}
             >
-                Local, Data e Hora do Evento.
+                Local, Data e Hora do Evento
             </Text>
         </View>
     )
@@ -25,13 +25,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#131016',
         padding: 24,
     },
-    textBold: {
+    eventName: {
         color: '#FDFCFE',
         fontSize: 24,
         marginTop: 48,
         fontWeight: 'bold',
     },
-    textNormal: {
+    eventDate: {
         color: '#6B6B6B',
         fontSize: 16,
     },
