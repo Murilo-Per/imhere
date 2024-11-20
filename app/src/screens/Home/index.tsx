@@ -1,17 +1,24 @@
-import { Text, TextInput, TouchableOpacity, View, ScrollView, FlatList } from "react-native";
+import { Text, TextInput, TouchableOpacity, View, ScrollView, FlatList, Alert } from "react-native";
 
 import { styles } from "./styles";
 import { CardParticipant } from "../../components/CardParticipant";
+import { useState } from "react";
 
 export function Home() {
-  const listParticipant = ["Murilo Pereira", "Pamela Priscila", "Heitor Benjamin", "Aurora Lis", "Ladjane Maria", "Paulo Cesar", "Maria Clara", "Mag the Dog", "Cururu", "Peixe"]
-  //const listParticipant = []
-  function handleParticipantAdd() {
-    console.log("clicou add")
+  const [listParticipant, setListParticipant] = useState<string[]>([])
+  const [participantName, setParticipantName] = useState('')
+
+  function handleParticipantAdd(pNewParticipantName: string) {
+
+    if (listParticipant.includes(pNewParticipantName)) {
+      return Alert.alert('Lista de Participantes', `O participante ${pNewParticipantName} já está na lista!`)
+    }
+
+    setListParticipant(prevState => [...prevState, pNewParticipantName])
   }
 
   function handleParticipantRemove(name: string) {
-    console.log(`clicou remove ${name}`)
+    setListParticipant(prevState => prevState.filter(participant => participant !== name))
   }
 
   function handleParticipantEmptyList() {
@@ -43,10 +50,12 @@ export function Home() {
           style={styles.input}
           placeholder="Nome do Participante"
           placeholderTextColor="#6B6B6B"
+          onChangeText={setParticipantName}
+          value={participantName}
         />
 
         <TouchableOpacity style={styles.button}
-          onPress={handleParticipantAdd}
+          onPress={() => handleParticipantAdd(participantName)}
         >
           <Text style={styles.buttonText}>
             +
@@ -67,34 +76,6 @@ export function Home() {
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={handleParticipantEmptyList}
       />
-
-      {/* <ScrollView showsVerticalScrollIndicator={false}>
-        {
-          listParticipant.map(partcipant => (
-            <CardParticipant
-              key={partcipant}
-              name={partcipant}
-              onRemove={() => handleParticipantRemove(partcipant)}
-            />
-          ))
-        }
-      </ScrollView> */}
-
-      {/* <CardParticipant
-        name="Murilo Pereira"
-        onRemove={() => handleParticipantRemove("Nome2")}
-      />
-
-      <CardParticipant
-        name="Heitor Pereira"
-        onRemove={() => handleParticipantRemove("Nome3")}
-      />
-
-      <CardParticipant
-        name="Aurora Pereira"
-        onRemove={() => handleParticipantRemove("Nome4")}
-      /> */}
-
     </View>
   )
 }
